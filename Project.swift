@@ -2,6 +2,9 @@ import ProjectDescription
 
 let project = Project(
     name: "Forky",
+    packages: [
+        .remote(url: "https://github.com/Alamofire/Alamofire.git", requirement: .upToNextMajor(from: "5.8.1"))
+    ],
     targets: [
         // MARK: - App
         .target(
@@ -68,7 +71,8 @@ let project = Project(
             sources: ["Forky/Sources/Data/**"],
             dependencies: [
                 .target(name: "ForkyDomain"),
-                .target(name: "ForkyCore")
+                .target(name: "ForkyCore"),
+                .package(product: "Alamofire")
             ]
         ),
         

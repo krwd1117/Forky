@@ -1,16 +1,20 @@
 import SwiftUI
 
-struct MainTabView: View {
+public struct MainTabView: View {
+    @EnvironmentObject var container: DIContainer
     @State private var selectedTab: Tab = .home
     @StateObject private var homeCoordinator = HomeCoordinator()
     
     init() {}
     
-    var body: some View {
+    public var body: some View {
         ZStack(alignment: .bottom) {
             TabView(selection: $selectedTab) {
-                HomeView(coordinator: homeCoordinator)
+                HomeView(coordinator: homeCoordinator, useCase: container.useCase.fetchRecipe)
                     .tag(Tab.home)
+                
+                RecipeView()
+                    .tag(Tab.recipe)
             }
             .ignoresSafeArea(edges: .bottom)
             

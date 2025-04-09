@@ -7,18 +7,12 @@ struct CustomTabBar: View {
         HStack {
             ForEach(Tab.allCases, id: \.rawValue) { tab in
                 Spacer()
-                VStack(spacing: 4) {
-                    Image(systemName: selectedTab == tab ? tab.selectedIcon : tab.icon)
-                        .font(.system(size: 24))
-                    Text(tab.title)
-                        .font(.caption2)
-                }
-                .foregroundColor(selectedTab == tab ? .blue : .gray)
-                .onTapGesture {
-                    withAnimation(.easeInOut) {
-                        selectedTab = tab
-                    }
-                }
+                
+                TabBarTabView(
+                    selectedTab: $selectedTab,
+                    tab: tab
+                )
+                
                 Spacer()
             }
         }
@@ -30,3 +24,35 @@ struct CustomTabBar: View {
         }
     }
 } 
+
+fileprivate struct TabBarTabView: View {
+    
+    @Binding var selectedTab: Tab
+    var tab: Tab
+    
+    var body: some View {
+        if tab == .fork {
+            VStack(spacing: 4) {
+                Image(systemName: selectedTab == tab ? tab.selectedIcon : tab.icon)
+                    .font(.system(size: 24))
+            }
+            .foregroundColor(selectedTab == tab ? .blue : .gray)
+            .onTapGesture {
+                withAnimation(.easeInOut) {
+                    selectedTab = tab
+                }
+            }
+        } else {
+            VStack(spacing: 4) {
+                Image(systemName: selectedTab == tab ? tab.selectedIcon : tab.icon)
+                    .font(.system(size: 24))
+            }
+            .foregroundColor(selectedTab == tab ? .blue : .gray)
+            .onTapGesture {
+                withAnimation(.easeInOut) {
+                    selectedTab = tab
+                }
+            }
+        }
+    }
+}
